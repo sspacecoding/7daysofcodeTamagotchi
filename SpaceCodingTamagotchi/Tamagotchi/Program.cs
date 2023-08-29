@@ -38,23 +38,15 @@ public class Program
             else
                 break;
         }
-        
+
         // Obter as características do Pokémon escolhido
         client = new RestClient($"https://pokeapi.co/api/v2/pokemon/{escolha}");
         request = new RestRequest(Method.GET);
         response = client.Execute(request);
 
-        var pokemonDetalhes = JsonConvert.DeserializeObject<PokemonDetailsResult>(response.Content);
-
-        var pokemonEscolhido = pokemonEspeciesResposta.Results[escolha - 1];
-
         // Mostrar as características ao jogador
-        Console.WriteLine("\n");
-        Console.WriteLine($"Você escolheu {pokemonEscolhido.Name}!");
-        Console.WriteLine($"Detalhes:");
-        Console.WriteLine($"- Nome: {pokemonEscolhido.Name}");
-        Console.WriteLine($"- Peso: {pokemonDetalhes.Weight}");
-        Console.WriteLine($"- Altura: {pokemonDetalhes.Height}");
-        Console.WriteLine("\n");
+        Console.WriteLine(response.Content);
+
+
     }
 }
