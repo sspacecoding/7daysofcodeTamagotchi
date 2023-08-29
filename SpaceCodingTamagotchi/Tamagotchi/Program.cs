@@ -55,6 +55,14 @@ public class Program
         Console.WriteLine($"- Nome: {pokemonEscolhido.Name}");
         Console.WriteLine($"- Peso: {pokemonDetalhes.Weight}");
         Console.WriteLine($"- Altura: {pokemonDetalhes.Height}");
+
+        Console.WriteLine("\n Habilidades do Mascote: ");
+
+        foreach (var abilityDetail in pokemonDetalhes.Abilities)
+        {
+            Console.WriteLine("Nome da Habilidade: " + abilityDetail.Ability.Name);
+        }
+
         Console.WriteLine("\n");
     }
 }
