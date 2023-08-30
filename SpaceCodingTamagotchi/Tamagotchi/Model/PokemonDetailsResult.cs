@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tamagotchi
+namespace Tamagotchi.Model
 {
     public class PokemonDetailsResult
     {

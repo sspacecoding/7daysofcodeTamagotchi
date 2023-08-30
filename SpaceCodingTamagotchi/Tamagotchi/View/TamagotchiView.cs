@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tamagotchi.Model;
 
-namespace Tamagotchi
+namespace Tamagotchi.View
 {
-    public class Menu
+    public class TamagotchiView
     {
         public void MostrarMensagemDeBoasVindas()
         {
@@ -55,7 +56,7 @@ namespace Tamagotchi
             Console.WriteLine("Espécies Disponíveis para Adoção:");
             for (int i = 0; i < especies.Count; i++)
             {
-                Console.WriteLine((i + 1) + ". " + especies[i].Name);
+                Console.WriteLine(i + 1 + ". " + especies[i].Name);
             }
         }
 
@@ -93,7 +94,7 @@ namespace Tamagotchi
             {
                 for (int i = 0; i < mascotesAdotados.Count; i++)
                 {
-                    Console.WriteLine((i + 1) + ". " + mascotesAdotados[i].Name);
+                    Console.WriteLine(i + 1 + ". " + mascotesAdotados[i].Name);
                 }
             }
         }
