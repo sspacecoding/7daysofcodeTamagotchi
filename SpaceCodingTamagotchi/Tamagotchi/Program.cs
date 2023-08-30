@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using RestSharp;
 using Tamagotchi.Controller;
 using Tamagotchi.Model;
@@ -9,6 +11,7 @@ namespace Tamagotchi
 {
     class Program
     {
+
         static void Main(string[] args)
         {
             TamagotchiContoller tamagotchiContoller = new TamagotchiContoller();

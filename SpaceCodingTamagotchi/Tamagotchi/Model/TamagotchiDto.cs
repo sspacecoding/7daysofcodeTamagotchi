@@ -27,13 +27,14 @@ namespace Tamagotchi.Model
             Saude = rand.Next(11);
         }
 
-        public void AtualizarPropriedades(PokemonDetailsResult pokemonDetails)
-        {
-            Nome = pokemonDetails.Name;
-            Altura = pokemonDetails.Height;
-            Peso = pokemonDetails.Weight;
-            Habilidades = pokemonDetails.Abilities.Select(a => new Habilidade { Nome = a.Ability.Name }).ToList();
-        }
+        //Agora utilizamos AutoMapper
+        //public void AtualizarPropriedades(PokemonDetailsResult pokemonDetails)
+        //{
+        //    Nome = pokemonDetails.Name;
+        //    Altura = pokemonDetails.Height;
+        //    Peso = pokemonDetails.Weight;
+        //    Habilidades = pokemonDetails.Abilities.Select(a => new Habilidade { Nome = a.Ability.Name }).ToList();
+        //}
         public void Alimentar()
         {
             Alimentacao = Math.Min(Alimentacao + 2, 10);
