@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tamagotchi
 {
-    internal class PokemonDetailsResult
+    public class PokemonDetailsResult
     {
         public List<AbilityDetail> Abilities { get; set; }
         public string Name { get; set; }
