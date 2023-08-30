@@ -11,55 +11,58 @@ namespace Tamagotchi.Controller
 {
     public class TamagotchiContoller
     {
-        private TamagotchiView menu { get; set; }
+        private TamagotchiView tamagotchiView { get; set; }
         private PokemonApiService pokemonApiService { get; set; }
         private List<PokemonResult> especiesDisponiveis { get; set; }
 
-        private List<PokemonDetailsResult> mascotesAdotados { get; set; }
+        private List<TamagotchiDto> mascotesAdotados { get; set; }
         public TamagotchiContoller()
         {
-            menu = new TamagotchiView();
+            tamagotchiView = new TamagotchiView();
             pokemonApiService = new PokemonApiService();
             especiesDisponiveis = pokemonApiService.ObterEspeciesDisponiveis();
-            mascotesAdotados = new List<PokemonDetailsResult>();
+            mascotesAdotados = new List<TamagotchiDto>();
         }
 
         public void Jogar()
-        {           
+        {
 
-            menu.MostrarMensagemDeBoasVindas();
+            tamagotchiView.MostrarMensagemDeBoasVindas();
 
             while (true)
             {
-                menu.MostrarMenuPrincipal();
-                int escolha = menu.ObterEscolhaDoJogador();
+                tamagotchiView.MostrarMenuPrincipal();
+                int escolha = tamagotchiView.ObterEscolhaDoJogador(4);
 
                 switch (escolha)
                 {
                     case 1:
                         while (true)
                         {
-                            menu.MostrarMenuDeAdocao();
-                            escolha = menu.ObterEscolhaDoJogador();
+                            tamagotchiView.MostrarMenuDeAdocao();
+                            escolha = tamagotchiView.ObterEscolhaDoJogador(4);
                             switch (escolha)
                             {
                                 case 1:
-                                    menu.MostrarEspeciesDisponiveis(especiesDisponiveis);
+                                    tamagotchiView.MostrarEspeciesDisponiveis(especiesDisponiveis);
                                     break;
                                 case 2:
-                                    menu.MostrarEspeciesDisponiveis(especiesDisponiveis);
-                                    int indiceEspecie = menu.ObterEspecieEscolhida(especiesDisponiveis);
+                                    tamagotchiView.MostrarEspeciesDisponiveis(especiesDisponiveis);
+                                    int indiceEspecie = tamagotchiView.ObterEspecieEscolhida(especiesDisponiveis);
                                     PokemonDetailsResult detalhes = pokemonApiService.ObterDetalhesDaEspecie(especiesDisponiveis[indiceEspecie]);
-                                    menu.MostrarDetalhesDaEspecie(detalhes);
+                                    tamagotchiView.MostrarDetalhesDaEspecie(detalhes);
                                     break;
                                 case 3:
-                                    menu.MostrarEspeciesDisponiveis(especiesDisponiveis);
-                                    indiceEspecie = menu.ObterEspecieEscolhida(especiesDisponiveis);
+                                    tamagotchiView.MostrarEspeciesDisponiveis(especiesDisponiveis);
+                                    indiceEspecie = tamagotchiView.ObterEspecieEscolhida(especiesDisponiveis);
                                     detalhes = pokemonApiService.ObterDetalhesDaEspecie(especiesDisponiveis[indiceEspecie]);
-                                    menu.MostrarDetalhesDaEspecie(detalhes);
-                                    if (menu.ConfirmarAdocao())
+                                    tamagotchiView.MostrarDetalhesDaEspecie(detalhes);
+                                    if (tamagotchiView.ConfirmarAdocao())
                                     {
-                                        mascotesAdotados.Add(detalhes);
+                                        var tamagotchi = new TamagotchiDto();
+                                        tamagotchi.AtualizarPropriedades(detalhes);
+                                        mascotesAdotados.Add(tamagotchi);
+
                                         Console.WriteLine("Parabéns! Você adotou um " + detalhes.Name + "!");
                                         Console.WriteLine("──────────────");
                                         Console.WriteLine("────▄████▄────");
@@ -80,9 +83,46 @@ namespace Tamagotchi.Controller
                         }
                         break;
                     case 2:
-                        menu.MostrarMascotesAdotados(mascotesAdotados);
+                        if (mascotesAdotados.Count == 0)
+                        {
+                            Console.WriteLine("Você não tem nenhum mascote adotado.");
+                            break;
+                        }
+
+                        Console.WriteLine("Escolha um mascote para interagir:");
+                        for (int i = 0; i < mascotesAdotados.Count; i++)
+                        {
+                            Console.WriteLine($"{i + 1}. {mascotesAdotados[i].Nome}");
+                        }
+
+                        int indiceMascote = tamagotchiView.ObterEscolhaDoJogador(mascotesAdotados.Count) - 1;
+                        TamagotchiDto mascoteEscolhido = mascotesAdotados[indiceMascote];
+
+                        int opcaoInteracao = 0;
+                        while (opcaoInteracao != 4)
+                        {
+                            tamagotchiView.MostrarMenuInteracao();
+                            opcaoInteracao = tamagotchiView.ObterEscolhaDoJogador(4);
+
+                            switch (opcaoInteracao)
+                            {
+                                case 1:
+                                    mascoteEscolhido.MostrarStatus();
+                                    break;
+                                case 2:
+                                    mascoteEscolhido.Alimentar();
+                                    break;
+                                case 3:
+                                    mascoteEscolhido.Brincar();
+                                    break;
+                            }
+                        }
                         break;
+
                     case 3:
+                        tamagotchiView.MostrarMascotesAdotados(mascotesAdotados);
+                        break;
+                    case 4:
                         Console.WriteLine("Obrigado por jogar! Até a próxima!");
                         return;
                 }
